@@ -18,6 +18,7 @@ pip install git+https://github.com/acidjunk/cnaas-nms-api-client.git
 
 ```python
 from cnaas_nms_api_client import AuthenticatedClient
+from cnaas_nms_api_client.api.devices import get_devices_api
 
 client = AuthenticatedClient(
     base_url="https://your-cnaas-instance/api/v1.0",
@@ -25,7 +26,6 @@ client = AuthenticatedClient(
 )
 
 # Example: list devices
-from cnaas_nms_api_client.api.device import get_devices_api
 response = get_devices_api.sync_detailed(client=client)
 print(response.status_code)
 ```
