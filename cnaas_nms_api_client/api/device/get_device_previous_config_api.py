@@ -1,0 +1,147 @@
+from http import HTTPStatus
+from typing import Any, Optional, Union, cast
+
+import httpx
+
+from ...client import AuthenticatedClient, Client
+from ...types import Response, UNSET
+from ... import errors
+
+from ...types import UNSET, Unset
+from typing import Union
+
+
+
+def _get_kwargs(
+    hostname: str,
+    *,
+    before: Union[Unset, str] = UNSET,
+    previous: Union[Unset, str] = UNSET,
+    job_id: Union[Unset, str] = UNSET,
+
+) -> dict[str, Any]:
+    
+
+    
+
+    params: dict[str, Any] = {}
+
+    params["before"] = before
+
+    params["previous"] = previous
+
+    params["job_id"] = job_id
+
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
+
+    _kwargs: dict[str, Any] = {
+        "method": "get",
+        "url": "/device/{hostname}/previous_config".format(hostname=hostname,),
+        "params": params,
+    }
+
+
+    return _kwargs
+
+
+
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+    if response.status_code == 200:
+        return None
+
+    if client.raise_on_unexpected_status:
+        raise errors.UnexpectedStatus(response.status_code, response.content)
+    else:
+        return None
+
+
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+    return Response(
+        status_code=HTTPStatus(response.status_code),
+        content=response.content,
+        headers=response.headers,
+        parsed=_parse_response(client=client, response=response),
+    )
+
+
+def sync_detailed(
+    hostname: str,
+    *,
+    client: Union[AuthenticatedClient, Client],
+    before: Union[Unset, str] = UNSET,
+    previous: Union[Unset, str] = UNSET,
+    job_id: Union[Unset, str] = UNSET,
+
+) -> Response[Any]:
+    """ 
+    Args:
+        hostname (str):
+        before (Union[Unset, str]):
+        previous (Union[Unset, str]):
+        job_id (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Any]
+     """
+
+
+    kwargs = _get_kwargs(
+        hostname=hostname,
+before=before,
+previous=previous,
+job_id=job_id,
+
+    )
+
+    response = client.get_httpx_client().request(
+        **kwargs,
+    )
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio_detailed(
+    hostname: str,
+    *,
+    client: Union[AuthenticatedClient, Client],
+    before: Union[Unset, str] = UNSET,
+    previous: Union[Unset, str] = UNSET,
+    job_id: Union[Unset, str] = UNSET,
+
+) -> Response[Any]:
+    """ 
+    Args:
+        hostname (str):
+        before (Union[Unset, str]):
+        previous (Union[Unset, str]):
+        job_id (Union[Unset, str]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Any]
+     """
+
+
+    kwargs = _get_kwargs(
+        hostname=hostname,
+before=before,
+previous=previous,
+job_id=job_id,
+
+    )
+
+    response = await client.get_async_httpx_client().request(
+        **kwargs
+    )
+
+    return _build_response(client=client, response=response)
+

@@ -1,0 +1,46 @@
+[project]
+name = "cnaas-nms-api-client"
+version = "0.1.0"
+description = "A Python client library for the CNaaS NMS API"
+authors = [
+    { name = "acidjunk", email = "acidjunk@gmail.com" },
+]
+license = { text = "MIT" }
+requires-python = ">=3.10"
+readme = "README.md"
+keywords = ["cnaas", "nms", "network", "api", "client", "openapi"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = [
+    "httpx>=0.23.0,<0.29.0",
+    "attrs>=22.2.0",
+    "python-dateutil>=2.8.0,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/acidjunk/cnaas-nms-api-client"
+Repository = "https://github.com/acidjunk/cnaas-nms-api-client"
+Issues = "https://github.com/acidjunk/cnaas-nms-api-client/issues"
+
+[tool.uv.build-backend]
+module-name = "cnaas_nms_api_client"
+module-root = ""
+
+[build-system]
+requires = ["uv_build>=0.8.0,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["F", "I", "UP"]

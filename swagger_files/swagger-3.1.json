@@ -1,0 +1,1907 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1.0"
+    }
+  ],
+  "paths": {
+    "/auth/auth": {
+      "get": {
+        "summary": "Function to authenticate the user",
+        "description": "This API call is called by the OAUTH login after the user has logged in.\nWe get the users token and redirect them to right page in the frontend.\n\nReturns:\n    A HTTP redirect response to the url in the frontend that handles the repsonse after login.\n    The access token is a parameter in the url",
+        "operationId": "get_auth_api",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/identity": {
+      "get": {
+        "operationId": "get_identity_api",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "summary": "Function to initiate a login of the user",
+        "description": "The user will be sent to the page to login.\nOur client info will also be checked.\n\nNote:\n    We also discussed adding state to this function.\n    That way you could be sent to the same page once you logged in.\n    We would put the relevant information in a dictionary,\n    base64 encode it and sent it around as a parameter.\n    For now the application is small and it didn't seem needed.\n\nReturns:\n    A HTTP redirect response to OIDC_CONF_WELL_KNOWN_URL we have defined.\n    We give the auth call as a parameter to redirect after login is successfull.",
+        "operationId": "get_login_api",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/permissions": {
+      "get": {
+        "operationId": "get_permissions_api",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "post_refresh_api",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device": {
+      "post": {
+        "summary": "Add a device",
+        "operationId": "post_device_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{device_id}": {
+      "parameters": [
+        {
+          "name": "device_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a device from ID",
+        "operationId": "get_device_by_id_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify device from ID",
+        "operationId": "put_device_by_id_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete device from ID",
+        "operationId": "delete_device_by_id_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/delete_devcie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a device from hostname",
+        "operationId": "get_device_by_hostname_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/apply_config": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Apply exact specified configuration to device without using templates",
+        "operationId": "post_device_apply_config_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_apply_config"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/generate_config": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get device configuration",
+        "operationId": "get_device_generate_config_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/generate_config"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/device/{hostname}/interface_status": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "List all interfaces status",
+        "operationId": "get_interface_status_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Bounce selected interfaces by appling bounce-down/bounce-up template",
+        "operationId": "put_interface_status_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/interfaces": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "List all interfaces",
+        "operationId": "get_interface_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Take a map of interfaces and associated values to update",
+        "description": "Example:\n    {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}",
+        "operationId": "put_interface_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/previous_config": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get_device_previous_config_api",
+        "tags": [
+          "device"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "before",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "previous",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "job_id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Restore configuration to previous version",
+        "operationId": "post_device_previous_config_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_restore"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/running_config": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get_device_running_config_api",
+        "tags": [
+          "device"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "interface",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/stackmember": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get stackmembers for device",
+        "operationId": "get_device_stackmembers_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "operationId": "put_device_stackmembers_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/stackmembers"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_cert": {
+      "post": {
+        "summary": "Execute certificate related actions on device",
+        "operationId": "post_device_cert_api",
+        "tags": [
+          "device_cert"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_cert"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_discover": {
+      "post": {
+        "summary": "Discover device",
+        "operationId": "post_device_discover_api",
+        "tags": [
+          "device_discover"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_discover"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_init/{device_id}": {
+      "parameters": [
+        {
+          "name": "device_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Init a device",
+        "operationId": "post_device_init_api",
+        "tags": [
+          "device_init"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_init"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_initcheck/{device_id}": {
+      "parameters": [
+        {
+          "name": "device_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Perform init check on a device",
+        "operationId": "post_device_init_check_api",
+        "tags": [
+          "device_initcheck"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_initcheck"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_synchistory": {
+      "get": {
+        "operationId": "get_device_sync_history_api",
+        "tags": [
+          "device_synchistory"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "hostname",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post_device_sync_history_api",
+        "tags": [
+          "device_synchistory"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_syncto": {
+      "post": {
+        "summary": "Start sync of device(s)",
+        "operationId": "post_device_sync_api",
+        "tags": [
+          "device_syncto"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_sync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_update_facts": {
+      "post": {
+        "summary": "Start update facts of device(s)",
+        "operationId": "post_device_update_facts_api",
+        "tags": [
+          "device_update_facts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_update_facts"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_update_interfaces": {
+      "post": {
+        "summary": "Update/scan interfaces of device",
+        "operationId": "post_device_update_interfaces_api",
+        "tags": [
+          "device_update_interfaces"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_update_interfaces"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "summary": "Get all devices",
+        "operationId": "get_devices_api",
+        "tags": [
+          "devices"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/firmware": {
+      "get": {
+        "summary": "Get firmwares",
+        "operationId": "get_firmware_api",
+        "tags": [
+          "firmware"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Download new firmware",
+        "operationId": "post_firmware_api",
+        "tags": [
+          "firmware"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/firmware_download"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/firmware/upgrade": {
+      "post": {
+        "summary": "Upgrade firmware on device",
+        "operationId": "post_firmware_upgrade_api",
+        "tags": [
+          "firmware"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/firmware_upgrade"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/firmware/{filename}": {
+      "parameters": [
+        {
+          "name": "filename",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get information about a single firmware",
+        "operationId": "get_firmware_image_api",
+        "tags": [
+          "firmware"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove firmware",
+        "operationId": "delete_firmware_image_api",
+        "tags": [
+          "firmware"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "summary": "Get all groups",
+        "operationId": "get_groups_api",
+        "tags": [
+          "groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/groups/{group_name}": {
+      "parameters": [
+        {
+          "name": "group_name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single group by name",
+        "operationId": "get_groups_api_by_name",
+        "tags": [
+          "groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/groups/{group_name}/os_version": {
+      "parameters": [
+        {
+          "name": "group_name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get os version of all devices in a group",
+        "operationId": "get_groups_api_by_name_osversion",
+        "tags": [
+          "groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/job/{job_id}": {
+      "parameters": [
+        {
+          "name": "job_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get job information by ID",
+        "operationId": "get_job_by_id_api",
+        "tags": [
+          "job"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "operationId": "put_job_by_id_api",
+        "tags": [
+          "job"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/joblocks": {
+      "get": {
+        "summary": "Get job locks",
+        "operationId": "get_job_lock_api",
+        "tags": [
+          "joblocks"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove job locks",
+        "operationId": "delete_job_lock_api",
+        "tags": [
+          "joblocks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/jobs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "summary": "Get one or more jobs",
+        "operationId": "get_jobs_api",
+        "tags": [
+          "jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/linknet/{linknet_id}": {
+      "parameters": [
+        {
+          "name": "linknet_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single specified linknet",
+        "operationId": "get_linknet_by_id_api",
+        "tags": [
+          "linknet"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update data on existing linknet",
+        "operationId": "put_linknet_by_id_api",
+        "tags": [
+          "linknet"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/linknet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove a linknet",
+        "operationId": "delete_linknet_by_id_api",
+        "tags": [
+          "linknet"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/linknets": {
+      "get": {
+        "summary": "Get all linksnets",
+        "operationId": "get_linknets_api",
+        "tags": [
+          "linknets"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove linknet",
+        "operationId": "delete_linknets_api",
+        "tags": [
+          "linknets"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new linknet",
+        "operationId": "post_linknets_api",
+        "tags": [
+          "linknets"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/linknets"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/mgmtdomain/{mgmtdomain_id}": {
+      "parameters": [
+        {
+          "name": "mgmtdomain_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get management domain by ID",
+        "operationId": "get_mgmtdomain_by_id_api",
+        "tags": [
+          "mgmtdomain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify management domain",
+        "operationId": "put_mgmtdomain_by_id_api",
+        "tags": [
+          "mgmtdomain"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/mgmtdomain"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove management domain",
+        "operationId": "delete_mgmtdomain_by_id_api",
+        "tags": [
+          "mgmtdomain"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/mgmtdomains": {
+      "get": {
+        "summary": "Get all management domains",
+        "operationId": "get_mgmtdomains_api",
+        "tags": [
+          "mgmtdomains"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add management domain",
+        "operationId": "post_mgmtdomains_api",
+        "tags": [
+          "mgmtdomains"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/mgmtdomain"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/plugins": {
+      "get": {
+        "summary": "List all plugins",
+        "operationId": "get_plugins_api",
+        "tags": [
+          "plugins"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify plugins",
+        "operationId": "put_plugins_api",
+        "tags": [
+          "plugins"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/plugin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/repository/{repo}": {
+      "parameters": [
+        {
+          "name": "repo",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get repository information",
+        "operationId": "get_repository_api",
+        "tags": [
+          "repository"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify repository",
+        "operationId": "put_repository_api",
+        "tags": [
+          "repository"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/repository"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/settings": {
+      "get": {
+        "summary": "Get settings",
+        "operationId": "get_settings_api",
+        "tags": [
+          "settings"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "device_type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "hostname",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/settings/model": {
+      "get": {
+        "operationId": "get_settings_model_api",
+        "tags": [
+          "settings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post_settings_model_api",
+        "tags": [
+          "settings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/settings/server": {
+      "get": {
+        "operationId": "get_settings_server_ap_i",
+        "tags": [
+          "settings"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/system/shutdown": {
+      "post": {
+        "operationId": "post_shutdown_api",
+        "tags": [
+          "system"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/system/version": {
+      "get": {
+        "operationId": "get_version_api",
+        "tags": [
+          "system"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "device": {
+        "required": [
+          "device_type",
+          "hostname",
+          "platform",
+          "state"
+        ],
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "site_id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "management_ip": {
+            "type": "string"
+          },
+          "infra_ip": {
+            "type": "string"
+          },
+          "dhcp_ip": {
+            "type": "string"
+          },
+          "serial": {
+            "type": "string"
+          },
+          "ztp_mac": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "vendor": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "os_version": {
+            "type": "string"
+          },
+          "synchronized": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "string"
+          },
+          "device_type": {
+            "type": "string"
+          },
+          "port": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "delete_devcie": {
+        "properties": {
+          "factory_default": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "generate_config": {
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "generated_config": {
+            "type": "string"
+          },
+          "available_variables": {
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "device_restore": {
+        "required": [
+          "job_id"
+        ],
+        "properties": {
+          "dry_run": {
+            "type": "boolean"
+          },
+          "job_id": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "device_apply_config": {
+        "required": [
+          "full_config"
+        ],
+        "properties": {
+          "dry_run": {
+            "type": "boolean"
+          },
+          "full_config": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "stackmembers": {
+        "properties": {
+          "stackmembers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/stackmember"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "stackmember": {
+        "required": [
+          "hardware_id"
+        ],
+        "properties": {
+          "member_no": {
+            "type": "integer"
+          },
+          "hardware_id": {
+            "type": "string"
+          },
+          "priority_id": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "device_init": {
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "device_type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "device_initcheck": {
+        "required": [
+          "device_type",
+          "hostname"
+        ],
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "device_type": {
+            "type": "string"
+          },
+          "mlag_peer_id": {
+            "type": "integer"
+          },
+          "mlag_peer_hostname": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "device_sync": {
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "device_type": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "all": {
+            "type": "boolean"
+          },
+          "dry_run": {
+            "type": "boolean"
+          },
+          "force": {
+            "type": "boolean"
+          },
+          "auto_push": {
+            "type": "boolean"
+          },
+          "resync": {
+            "type": "boolean"
+          },
+          "confirm_mode": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "device_discover": {
+        "required": [
+          "dhcp_ip",
+          "ztp_mac"
+        ],
+        "properties": {
+          "ztp_mac": {
+            "type": "string"
+          },
+          "dhcp_ip": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "device_update_facts": {
+        "required": [
+          "hostname"
+        ],
+        "properties": {
+          "hostname": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "device_update_interfaces": {
+        "required": [
+          "hostname"
+        ],
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "replace": {
+            "type": "boolean"
+          },
+          "delete_all": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "device_cert": {
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "hostname": {
+            "type": "string",
+            "description": "Device hostname",
+            "example": "myhostname"
+          },
+          "group": {
+            "type": "string",
+            "description": "Device group",
+            "example": "mygroup"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action to execute, one of: RENEW",
+            "example": "RENEW"
+          }
+        },
+        "type": "object"
+      },
+      "linknets": {
+        "required": [
+          "device_a",
+          "device_a_port",
+          "device_b",
+          "device_b_port"
+        ],
+        "properties": {
+          "device_a": {
+            "type": "string"
+          },
+          "device_b": {
+            "type": "string"
+          },
+          "device_a_port": {
+            "type": "string"
+          },
+          "device_b_port": {
+            "type": "string"
+          },
+          "ipv4_network": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "linknet": {
+        "properties": {
+          "device_a": {
+            "type": "string"
+          },
+          "device_b": {
+            "type": "string"
+          },
+          "device_a_port": {
+            "type": "string"
+          },
+          "device_b_port": {
+            "type": "string"
+          },
+          "ipv4_network": {
+            "type": "string"
+          },
+          "device_a_ip": {
+            "type": "string"
+          },
+          "device_b_ip": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "firmware_download": {
+        "required": [
+          "filename",
+          "sha1",
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "sha1": {
+            "type": "string"
+          },
+          "verify_tls": {
+            "type": "boolean"
+          },
+          "filename": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "firmware_upgrade": {
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "start_at": {
+            "type": "string"
+          },
+          "download": {
+            "type": "boolean"
+          },
+          "activate": {
+            "type": "boolean"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "hostname": {
+            "type": "string"
+          },
+          "pre_flight": {
+            "type": "boolean"
+          },
+          "post_flight": {
+            "type": "boolean"
+          },
+          "post_wattime": {
+            "type": "integer"
+          },
+          "reboot": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "jobs": {
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "mgmtdomain": {
+        "required": [
+          "device_a",
+          "device_b",
+          "ipv4_gw",
+          "ipv6_gw",
+          "vlan"
+        ],
+        "properties": {
+          "device_a": {
+            "type": "string"
+          },
+          "device_b": {
+            "type": "string"
+          },
+          "vlan": {
+            "type": "integer"
+          },
+          "ipv4_gw": {
+            "type": "string"
+          },
+          "ipv6_gw": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "repository": {
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "plugin": {
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apikey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Type in 'Bearer <your JWT token here' to authenticate."
+      }
+    },
+    "responses": {
+      "ParseError": {
+        "description": "When a mask can't be parsed"
+      },
+      "MaskError": {
+        "description": "When any error occurs on mask"
+      }
+    }
+  },
+  "security": [
+    {
+      "apikey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "API for handling auth"
+    },
+    {
+      "name": "device",
+      "description": "API for handling a single device"
+    },
+    {
+      "name": "devices",
+      "description": "API for handling devices"
+    },
+    {
+      "name": "device_init",
+      "description": "API for init devices"
+    },
+    {
+      "name": "device_initcheck",
+      "description": "API for init check of devices"
+    },
+    {
+      "name": "device_syncto",
+      "description": "API to sync devices"
+    },
+    {
+      "name": "device_discover",
+      "description": "API to discover devices"
+    },
+    {
+      "name": "device_update_facts",
+      "description": "API to update facts about devices"
+    },
+    {
+      "name": "device_update_interfaces",
+      "description": "API to update/scan device interfaces"
+    },
+    {
+      "name": "device_cert",
+      "description": "API to handle device certificates"
+    },
+    {
+      "name": "device_synchistory",
+      "description": "API to query sync history for devices"
+    },
+    {
+      "name": "linknets",
+      "description": "API for handling linknets"
+    },
+    {
+      "name": "linknet",
+      "description": "API for handling a single linknet"
+    },
+    {
+      "name": "firmware",
+      "description": "API for handling firmwares"
+    },
+    {
+      "name": "device",
+      "description": "API for handling interfaces"
+    },
+    {
+      "name": "job",
+      "description": "API for handling jobs"
+    },
+    {
+      "name": "jobs",
+      "description": "API for handling jobs"
+    },
+    {
+      "name": "joblocks",
+      "description": "API for handling jobs"
+    },
+    {
+      "name": "mgmtdomain",
+      "description": "API for handling a single management domain"
+    },
+    {
+      "name": "mgmtdomains",
+      "description": "API for handling management domains"
+    },
+    {
+      "name": "groups",
+      "description": "API for handling groups"
+    },
+    {
+      "name": "repository",
+      "description": "API for handling repositories"
+    },
+    {
+      "name": "settings",
+      "description": "Settings"
+    },
+    {
+      "name": "plugins",
+      "description": "API for handling plugins"
+    },
+    {
+      "name": "system",
+      "description": "API for managing the CNaaS NMS API system"
+    }
+  ]
+}
