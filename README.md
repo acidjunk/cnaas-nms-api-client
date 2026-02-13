@@ -62,4 +62,4 @@ If the upstream CNaaS NMS API changes:
 
 ## License
 
-MIT
+Apache-2.0
