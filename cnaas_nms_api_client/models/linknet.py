@@ -1,48 +1,35 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
-
-
-
-
-
-
 T = TypeVar("T", bound="Linknet")
-
 
 
 @_attrs_define
 class Linknet:
-    """ 
-        Attributes:
-            device_a (Union[Unset, str]):
-            device_b (Union[Unset, str]):
-            device_a_port (Union[Unset, str]):
-            device_b_port (Union[Unset, str]):
-            ipv4_network (Union[Unset, str]):
-            device_a_ip (Union[Unset, str]):
-            device_b_ip (Union[Unset, str]):
-     """
+    """
+    Attributes:
+        device_a (Union[Unset, str]):
+        device_b (Union[Unset, str]):
+        device_a_port (Union[Unset, str]):
+        device_b_port (Union[Unset, str]):
+        ipv4_network (Union[Unset, str]):
+        device_a_ip (Union[Unset, str]):
+        device_b_ip (Union[Unset, str]):
+    """
 
-    device_a: Union[Unset, str] = UNSET
-    device_b: Union[Unset, str] = UNSET
-    device_a_port: Union[Unset, str] = UNSET
-    device_b_port: Union[Unset, str] = UNSET
-    ipv4_network: Union[Unset, str] = UNSET
-    device_a_ip: Union[Unset, str] = UNSET
-    device_b_ip: Union[Unset, str] = UNSET
+    device_a: Unset | str = UNSET
+    device_b: Unset | str = UNSET
+    device_a_port: Unset | str = UNSET
+    device_b_port: Unset | str = UNSET
+    ipv4_network: Unset | str = UNSET
+    device_a_ip: Unset | str = UNSET
+    device_b_ip: Unset | str = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         device_a = self.device_a
@@ -59,11 +46,9 @@ class Linknet:
 
         device_b_ip = self.device_b_ip
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-        })
+        field_dict.update({})
         if device_a is not UNSET:
             field_dict["device_a"] = device_a
         if device_b is not UNSET:
@@ -80,8 +65,6 @@ class Linknet:
             field_dict["device_b_ip"] = device_b_ip
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -109,7 +92,6 @@ class Linknet:
             device_a_ip=device_a_ip,
             device_b_ip=device_b_ip,
         )
-
 
         linknet.additional_properties = d
         return linknet

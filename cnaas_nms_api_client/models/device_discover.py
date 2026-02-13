@@ -1,53 +1,39 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import UNSET, Unset
-
-
-
-
-
-
-
 T = TypeVar("T", bound="DeviceDiscover")
-
 
 
 @_attrs_define
 class DeviceDiscover:
-    """ 
-        Attributes:
-            ztp_mac (str):
-            dhcp_ip (str):
-     """
+    """
+    Attributes:
+        ztp_mac (str):
+        dhcp_ip (str):
+    """
 
     ztp_mac: str
     dhcp_ip: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         ztp_mac = self.ztp_mac
 
         dhcp_ip = self.dhcp_ip
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "ztp_mac": ztp_mac,
-            "dhcp_ip": dhcp_ip,
-        })
+        field_dict.update(
+            {
+                "ztp_mac": ztp_mac,
+                "dhcp_ip": dhcp_ip,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -60,7 +46,6 @@ class DeviceDiscover:
             ztp_mac=ztp_mac,
             dhcp_ip=dhcp_ip,
         )
-
 
         device_discover.additional_properties = d
         return device_discover

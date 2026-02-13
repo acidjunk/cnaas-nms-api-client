@@ -1,57 +1,40 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
-
-
-
-
-
-
 T = TypeVar("T", bound="DeviceInit")
-
 
 
 @_attrs_define
 class DeviceInit:
-    """ 
-        Attributes:
-            hostname (Union[Unset, str]):
-            device_type (Union[Unset, str]):
-     """
+    """
+    Attributes:
+        hostname (Union[Unset, str]):
+        device_type (Union[Unset, str]):
+    """
 
-    hostname: Union[Unset, str] = UNSET
-    device_type: Union[Unset, str] = UNSET
+    hostname: Unset | str = UNSET
+    device_type: Unset | str = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         hostname = self.hostname
 
         device_type = self.device_type
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-        })
+        field_dict.update({})
         if hostname is not UNSET:
             field_dict["hostname"] = hostname
         if device_type is not UNSET:
             field_dict["device_type"] = device_type
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -64,7 +47,6 @@ class DeviceInit:
             hostname=hostname,
             device_type=device_type,
         )
-
 
         device_init.additional_properties = d
         return device_init

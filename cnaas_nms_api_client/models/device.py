@@ -1,66 +1,53 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
-
-
-
-
-
-
 T = TypeVar("T", bound="Device")
-
 
 
 @_attrs_define
 class Device:
-    """ 
-        Attributes:
-            hostname (str):
-            platform (str):
-            state (str):
-            device_type (str):
-            site_id (Union[Unset, int]):
-            description (Union[Unset, str]):
-            management_ip (Union[Unset, str]):
-            infra_ip (Union[Unset, str]):
-            dhcp_ip (Union[Unset, str]):
-            serial (Union[Unset, str]):
-            ztp_mac (Union[Unset, str]):
-            vendor (Union[Unset, str]):
-            model (Union[Unset, str]):
-            os_version (Union[Unset, str]):
-            synchronized (Union[Unset, bool]):
-            port (Union[Unset, int]):
-     """
+    """
+    Attributes:
+        hostname (str):
+        platform (str):
+        state (str):
+        device_type (str):
+        site_id (Union[Unset, int]):
+        description (Union[Unset, str]):
+        management_ip (Union[Unset, str]):
+        infra_ip (Union[Unset, str]):
+        dhcp_ip (Union[Unset, str]):
+        serial (Union[Unset, str]):
+        ztp_mac (Union[Unset, str]):
+        vendor (Union[Unset, str]):
+        model (Union[Unset, str]):
+        os_version (Union[Unset, str]):
+        synchronized (Union[Unset, bool]):
+        port (Union[Unset, int]):
+    """
 
     hostname: str
     platform: str
     state: str
     device_type: str
-    site_id: Union[Unset, int] = UNSET
-    description: Union[Unset, str] = UNSET
-    management_ip: Union[Unset, str] = UNSET
-    infra_ip: Union[Unset, str] = UNSET
-    dhcp_ip: Union[Unset, str] = UNSET
-    serial: Union[Unset, str] = UNSET
-    ztp_mac: Union[Unset, str] = UNSET
-    vendor: Union[Unset, str] = UNSET
-    model: Union[Unset, str] = UNSET
-    os_version: Union[Unset, str] = UNSET
-    synchronized: Union[Unset, bool] = UNSET
-    port: Union[Unset, int] = UNSET
+    site_id: Unset | int = UNSET
+    description: Unset | str = UNSET
+    management_ip: Unset | str = UNSET
+    infra_ip: Unset | str = UNSET
+    dhcp_ip: Unset | str = UNSET
+    serial: Unset | str = UNSET
+    ztp_mac: Unset | str = UNSET
+    vendor: Unset | str = UNSET
+    model: Unset | str = UNSET
+    os_version: Unset | str = UNSET
+    synchronized: Unset | bool = UNSET
+    port: Unset | int = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         hostname = self.hostname
@@ -95,15 +82,16 @@ class Device:
 
         port = self.port
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "hostname": hostname,
-            "platform": platform,
-            "state": state,
-            "device_type": device_type,
-        })
+        field_dict.update(
+            {
+                "hostname": hostname,
+                "platform": platform,
+                "state": state,
+                "device_type": device_type,
+            }
+        )
         if site_id is not UNSET:
             field_dict["site_id"] = site_id
         if description is not UNSET:
@@ -130,8 +118,6 @@ class Device:
             field_dict["port"] = port
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -186,7 +172,6 @@ class Device:
             synchronized=synchronized,
             port=port,
         )
-
 
         device.additional_properties = d
         return device

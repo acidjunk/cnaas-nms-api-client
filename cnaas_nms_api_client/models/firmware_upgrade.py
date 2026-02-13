@@ -1,56 +1,43 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
-
-
-
-
-
-
 T = TypeVar("T", bound="FirmwareUpgrade")
-
 
 
 @_attrs_define
 class FirmwareUpgrade:
-    """ 
-        Attributes:
-            url (str):
-            start_at (Union[Unset, str]):
-            download (Union[Unset, bool]):
-            activate (Union[Unset, bool]):
-            filename (Union[Unset, str]):
-            group (Union[Unset, str]):
-            hostname (Union[Unset, str]):
-            pre_flight (Union[Unset, bool]):
-            post_flight (Union[Unset, bool]):
-            post_wattime (Union[Unset, int]):
-            reboot (Union[Unset, bool]):
-     """
+    """
+    Attributes:
+        url (str):
+        start_at (Union[Unset, str]):
+        download (Union[Unset, bool]):
+        activate (Union[Unset, bool]):
+        filename (Union[Unset, str]):
+        group (Union[Unset, str]):
+        hostname (Union[Unset, str]):
+        pre_flight (Union[Unset, bool]):
+        post_flight (Union[Unset, bool]):
+        post_wattime (Union[Unset, int]):
+        reboot (Union[Unset, bool]):
+    """
 
     url: str
-    start_at: Union[Unset, str] = UNSET
-    download: Union[Unset, bool] = UNSET
-    activate: Union[Unset, bool] = UNSET
-    filename: Union[Unset, str] = UNSET
-    group: Union[Unset, str] = UNSET
-    hostname: Union[Unset, str] = UNSET
-    pre_flight: Union[Unset, bool] = UNSET
-    post_flight: Union[Unset, bool] = UNSET
-    post_wattime: Union[Unset, int] = UNSET
-    reboot: Union[Unset, bool] = UNSET
+    start_at: Unset | str = UNSET
+    download: Unset | bool = UNSET
+    activate: Unset | bool = UNSET
+    filename: Unset | str = UNSET
+    group: Unset | str = UNSET
+    hostname: Unset | str = UNSET
+    pre_flight: Unset | bool = UNSET
+    post_flight: Unset | bool = UNSET
+    post_wattime: Unset | int = UNSET
+    reboot: Unset | bool = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         url = self.url
@@ -75,12 +62,13 @@ class FirmwareUpgrade:
 
         reboot = self.reboot
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "url": url,
-        })
+        field_dict.update(
+            {
+                "url": url,
+            }
+        )
         if start_at is not UNSET:
             field_dict["start_at"] = start_at
         if download is not UNSET:
@@ -103,8 +91,6 @@ class FirmwareUpgrade:
             field_dict["reboot"] = reboot
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -144,7 +130,6 @@ class FirmwareUpgrade:
             post_wattime=post_wattime,
             reboot=reboot,
         )
-
 
         firmware_upgrade.additional_properties = d
         return firmware_upgrade

@@ -1,33 +1,23 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any
 
 import httpx
 
-from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
 from ... import errors
-
-from ...types import UNSET, Unset
-from typing import Union
-
+from ...client import AuthenticatedClient, Client
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
-    hostname: Union[Unset, str] = UNSET,
-
+    hostname: Unset | str = UNSET,
 ) -> dict[str, Any]:
-    
-
-    
 
     params: dict[str, Any] = {}
 
     params["hostname"] = hostname
 
-
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
 
     _kwargs: dict[str, Any] = {
         "method": "get",
@@ -35,12 +25,10 @@ def _get_kwargs(
         "params": params,
     }
 
-
     return _kwargs
 
 
-
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Any | None:
     if response.status_code == 200:
         return None
 
@@ -50,7 +38,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -61,11 +49,10 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    hostname: Union[Unset, str] = UNSET,
-
+    client: AuthenticatedClient | Client,
+    hostname: Unset | str = UNSET,
 ) -> Response[Any]:
-    """ 
+    """
     Args:
         hostname (Union[Unset, str]):
 
@@ -75,12 +62,10 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
-
+    """
 
     kwargs = _get_kwargs(
         hostname=hostname,
-
     )
 
     response = client.get_httpx_client().request(
@@ -92,11 +77,10 @@ def sync_detailed(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    hostname: Union[Unset, str] = UNSET,
-
+    client: AuthenticatedClient | Client,
+    hostname: Unset | str = UNSET,
 ) -> Response[Any]:
-    """ 
+    """
     Args:
         hostname (Union[Unset, str]):
 
@@ -106,17 +90,12 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
-
+    """
 
     kwargs = _get_kwargs(
         hostname=hostname,
-
     )
 
-    response = await client.get_async_httpx_client().request(
-        **kwargs
-    )
+    response = await client.get_async_httpx_client().request(**kwargs)
 
     return _build_response(client=client, response=response)
-

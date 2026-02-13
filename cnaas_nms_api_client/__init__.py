@@ -1,5 +1,5 @@
+"""A client library for accessing API"""
 
-""" A client library for accessing API """
 from .client import AuthenticatedClient, Client
 
 __all__ = (

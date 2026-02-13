@@ -1,28 +1,20 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any
 
 import httpx
 
-from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
 from ... import errors
-
-from ...types import UNSET, Unset
-from typing import Union
-
+from ...client import AuthenticatedClient, Client
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     hostname: str,
     *,
-    before: Union[Unset, str] = UNSET,
-    previous: Union[Unset, str] = UNSET,
-    job_id: Union[Unset, str] = UNSET,
-
+    before: Unset | str = UNSET,
+    previous: Unset | str = UNSET,
+    job_id: Unset | str = UNSET,
 ) -> dict[str, Any]:
-    
-
-    
 
     params: dict[str, Any] = {}
 
@@ -32,22 +24,18 @@ def _get_kwargs(
 
     params["job_id"] = job_id
 
-
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/device/{hostname}/previous_config".format(hostname=hostname,),
+        "url": f"/device/{hostname}/previous_config",
         "params": params,
     }
-
 
     return _kwargs
 
 
-
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Any | None:
     if response.status_code == 200:
         return None
 
@@ -57,7 +45,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,13 +57,12 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     hostname: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-    before: Union[Unset, str] = UNSET,
-    previous: Union[Unset, str] = UNSET,
-    job_id: Union[Unset, str] = UNSET,
-
+    client: AuthenticatedClient | Client,
+    before: Unset | str = UNSET,
+    previous: Unset | str = UNSET,
+    job_id: Unset | str = UNSET,
 ) -> Response[Any]:
-    """ 
+    """
     Args:
         hostname (str):
         before (Union[Unset, str]):
@@ -88,15 +75,13 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
-
+    """
 
     kwargs = _get_kwargs(
         hostname=hostname,
-before=before,
-previous=previous,
-job_id=job_id,
-
+        before=before,
+        previous=previous,
+        job_id=job_id,
     )
 
     response = client.get_httpx_client().request(
@@ -109,13 +94,12 @@ job_id=job_id,
 async def asyncio_detailed(
     hostname: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-    before: Union[Unset, str] = UNSET,
-    previous: Union[Unset, str] = UNSET,
-    job_id: Union[Unset, str] = UNSET,
-
+    client: AuthenticatedClient | Client,
+    before: Unset | str = UNSET,
+    previous: Unset | str = UNSET,
+    job_id: Unset | str = UNSET,
 ) -> Response[Any]:
-    """ 
+    """
     Args:
         hostname (str):
         before (Union[Unset, str]):
@@ -128,20 +112,15 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
-
+    """
 
     kwargs = _get_kwargs(
         hostname=hostname,
-before=before,
-previous=previous,
-job_id=job_id,
-
+        before=before,
+        previous=previous,
+        job_id=job_id,
     )
 
-    response = await client.get_async_httpx_client().request(
-        **kwargs
-    )
+    response = await client.get_async_httpx_client().request(**kwargs)
 
     return _build_response(client=client, response=response)
-

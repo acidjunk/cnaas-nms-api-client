@@ -1,42 +1,29 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
-
-
-
-
-
-
 T = TypeVar("T", bound="DeviceInitcheck")
-
 
 
 @_attrs_define
 class DeviceInitcheck:
-    """ 
-        Attributes:
-            hostname (str):
-            device_type (str):
-            mlag_peer_id (Union[Unset, int]):
-            mlag_peer_hostname (Union[Unset, str]):
-     """
+    """
+    Attributes:
+        hostname (str):
+        device_type (str):
+        mlag_peer_id (Union[Unset, int]):
+        mlag_peer_hostname (Union[Unset, str]):
+    """
 
     hostname: str
     device_type: str
-    mlag_peer_id: Union[Unset, int] = UNSET
-    mlag_peer_hostname: Union[Unset, str] = UNSET
+    mlag_peer_id: Unset | int = UNSET
+    mlag_peer_hostname: Unset | str = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         hostname = self.hostname
@@ -47,21 +34,20 @@ class DeviceInitcheck:
 
         mlag_peer_hostname = self.mlag_peer_hostname
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "hostname": hostname,
-            "device_type": device_type,
-        })
+        field_dict.update(
+            {
+                "hostname": hostname,
+                "device_type": device_type,
+            }
+        )
         if mlag_peer_id is not UNSET:
             field_dict["mlag_peer_id"] = mlag_peer_id
         if mlag_peer_hostname is not UNSET:
             field_dict["mlag_peer_hostname"] = mlag_peer_hostname
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -80,7 +66,6 @@ class DeviceInitcheck:
             mlag_peer_id=mlag_peer_id,
             mlag_peer_hostname=mlag_peer_hostname,
         )
-
 
         device_initcheck.additional_properties = d
         return device_initcheck

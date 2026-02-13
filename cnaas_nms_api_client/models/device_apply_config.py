@@ -1,56 +1,42 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import Union
-
-
-
-
-
-
 T = TypeVar("T", bound="DeviceApplyConfig")
-
 
 
 @_attrs_define
 class DeviceApplyConfig:
-    """ 
-        Attributes:
-            full_config (str):
-            dry_run (Union[Unset, bool]):
-     """
+    """
+    Attributes:
+        full_config (str):
+        dry_run (Union[Unset, bool]):
+    """
 
     full_config: str
-    dry_run: Union[Unset, bool] = UNSET
+    dry_run: Unset | bool = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
-
-
-
-
 
     def to_dict(self) -> dict[str, Any]:
         full_config = self.full_config
 
         dry_run = self.dry_run
 
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "full_config": full_config,
-        })
+        field_dict.update(
+            {
+                "full_config": full_config,
+            }
+        )
         if dry_run is not UNSET:
             field_dict["dry_run"] = dry_run
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
@@ -63,7 +49,6 @@ class DeviceApplyConfig:
             full_config=full_config,
             dry_run=dry_run,
         )
-
 
         device_apply_config.additional_properties = d
         return device_apply_config

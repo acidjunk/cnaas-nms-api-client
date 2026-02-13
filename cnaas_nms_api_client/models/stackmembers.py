@@ -1,81 +1,59 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Generator
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-from ..types import UNSET, Unset
-from typing import cast
-from typing import Union
-
 if TYPE_CHECKING:
-  from ..models.stackmember import Stackmember
-
-
-
+    from ..models.stackmember import Stackmember
 
 
 T = TypeVar("T", bound="Stackmembers")
 
 
-
 @_attrs_define
 class Stackmembers:
-    """ 
-        Attributes:
-            stackmembers (Union[Unset, list['Stackmember']]):
-     """
+    """
+    Attributes:
+        stackmembers (Union[Unset, list['Stackmember']]):
+    """
 
-    stackmembers: Union[Unset, list['Stackmember']] = UNSET
+    stackmembers: Unset | list["Stackmember"] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-
-
-
-
     def to_dict(self) -> dict[str, Any]:
-        from ..models.stackmember import Stackmember
-        stackmembers: Union[Unset, list[dict[str, Any]]] = UNSET
+        stackmembers: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.stackmembers, Unset):
             stackmembers = []
             for stackmembers_item_data in self.stackmembers:
                 stackmembers_item = stackmembers_item_data.to_dict()
                 stackmembers.append(stackmembers_item)
 
-
-
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-        })
+        field_dict.update({})
         if stackmembers is not UNSET:
             field_dict["stackmembers"] = stackmembers
 
         return field_dict
 
-
-
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.stackmember import Stackmember
+
         d = dict(src_dict)
         stackmembers = []
         _stackmembers = d.pop("stackmembers", UNSET)
-        for stackmembers_item_data in (_stackmembers or []):
+        for stackmembers_item_data in _stackmembers or []:
             stackmembers_item = Stackmember.from_dict(stackmembers_item_data)
 
-
-
             stackmembers.append(stackmembers_item)
-
 
         stackmembers = cls(
             stackmembers=stackmembers,
         )
-
 
         stackmembers.additional_properties = d
         return stackmembers

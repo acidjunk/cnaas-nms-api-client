@@ -112,15 +112,13 @@ def convert_swagger_to_openapi(swagger):
     if "responses" in swagger:
         openapi["components"]["responses"] = {}
         for name, resp in swagger["responses"].items():
-            openapi["components"]["responses"][name] = {
-                "description": resp.get("description", "")
-            }
+            openapi["components"]["responses"][name] = {"description": resp.get("description", "")}
 
     return openapi
 
 
 if __name__ == "__main__":
-    with open("swagger.json", "r") as f:
+    with open("swagger.json") as f:
         swagger = json.load(f)
 
     openapi = convert_swagger_to_openapi(swagger)

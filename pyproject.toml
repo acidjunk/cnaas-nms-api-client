@@ -26,6 +26,11 @@ dependencies = [
     "python-dateutil>=2.8.0,<3",
 ]
 
+[dependency-groups]
+dev = [
+    "ruff>=0.4.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/acidjunk/cnaas-nms-api-client"
 Repository = "https://github.com/acidjunk/cnaas-nms-api-client"
