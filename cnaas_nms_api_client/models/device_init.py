@@ -15,16 +15,21 @@ class DeviceInit:
     Attributes:
         hostname (Union[Unset, str]):
         device_type (Union[Unset, str]):
+        replace_hostname (Union[Unset, bool]): This device id should replace old device with specified hostname Default:
+            False.
     """
 
     hostname: Unset | str = UNSET
     device_type: Unset | str = UNSET
+    replace_hostname: Unset | bool = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         hostname = self.hostname
 
         device_type = self.device_type
+
+        replace_hostname = self.replace_hostname
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -33,6 +38,8 @@ class DeviceInit:
             field_dict["hostname"] = hostname
         if device_type is not UNSET:
             field_dict["device_type"] = device_type
+        if replace_hostname is not UNSET:
+            field_dict["replace_hostname"] = replace_hostname
 
         return field_dict
 
@@ -43,9 +50,12 @@ class DeviceInit:
 
         device_type = d.pop("device_type", UNSET)
 
+        replace_hostname = d.pop("replace_hostname", UNSET)
+
         device_init = cls(
             hostname=hostname,
             device_type=device_type,
+            replace_hostname=replace_hostname,
         )
 
         device_init.additional_properties = d

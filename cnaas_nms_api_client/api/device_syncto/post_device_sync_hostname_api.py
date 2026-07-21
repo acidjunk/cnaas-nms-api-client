@@ -5,20 +5,20 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.interfaces import Interfaces
+from ...models.device_hostname_sync import DeviceHostnameSync
 from ...types import Response
 
 
 def _get_kwargs(
     hostname: str,
     *,
-    body: Interfaces,
+    body: DeviceHostnameSync,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
     _kwargs: dict[str, Any] = {
-        "method": "put",
-        "url": f"/device/{hostname}/interfaces",
+        "method": "post",
+        "url": f"/device_syncto/hostname/{hostname}",
     }
 
     _kwargs["json"] = body.to_dict()
@@ -52,16 +52,13 @@ def sync_detailed(
     hostname: str,
     *,
     client: AuthenticatedClient | Client,
-    body: Interfaces,
+    body: DeviceHostnameSync,
 ) -> Response[Any]:
-    r"""Take a map of interfaces and associated values to update
-
-     Example:
-        {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}
+    """Start sync of device(s)
 
     Args:
         hostname (str):
-        body (Interfaces):
+        body (DeviceHostnameSync):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -87,16 +84,13 @@ async def asyncio_detailed(
     hostname: str,
     *,
     client: AuthenticatedClient | Client,
-    body: Interfaces,
+    body: DeviceHostnameSync,
 ) -> Response[Any]:
-    r"""Take a map of interfaces and associated values to update
-
-     Example:
-        {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}
+    """Start sync of device(s)
 
     Args:
         hostname (str):
-        body (Interfaces):
+        body (DeviceHostnameSync):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

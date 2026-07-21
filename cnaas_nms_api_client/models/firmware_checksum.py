@@ -4,27 +4,32 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="Repository")
+T = TypeVar("T", bound="FirmwareChecksum")
 
 
 @_attrs_define
-class Repository:
+class FirmwareChecksum:
     """
     Attributes:
-        action (str):  Example: REFRESH.
+        algorithm (str): checksum algorithm
+        checksum (str): checksum value
     """
 
-    action: str
+    algorithm: str
+    checksum: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        action = self.action
+        algorithm = self.algorithm
+
+        checksum = self.checksum
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "action": action,
+                "algorithm": algorithm,
+                "checksum": checksum,
             }
         )
 
@@ -33,14 +38,17 @@ class Repository:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        action = d.pop("action")
+        algorithm = d.pop("algorithm")
 
-        repository = cls(
-            action=action,
+        checksum = d.pop("checksum")
+
+        firmware_checksum = cls(
+            algorithm=algorithm,
+            checksum=checksum,
         )
 
-        repository.additional_properties = d
-        return repository
+        firmware_checksum.additional_properties = d
+        return firmware_checksum
 
     @property
     def additional_keys(self) -> list[str]:

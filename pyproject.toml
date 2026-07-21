@@ -1,6 +1,6 @@
 [project]
 name = "cnaas-nms-api-client"
-version = "0.1.2"
+version = "0.2.0"
 description = "A Python client library for the CNaaS NMS API"
 authors = [
     { name = "acidjunk", email = "acidjunk@gmail.com" },

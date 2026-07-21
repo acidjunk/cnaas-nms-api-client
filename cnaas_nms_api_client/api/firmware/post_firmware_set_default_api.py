@@ -5,27 +5,18 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.interfaces import Interfaces
 from ...types import Response
 
 
 def _get_kwargs(
-    hostname: str,
-    *,
-    body: Interfaces,
+    filename: str,
 ) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
 
     _kwargs: dict[str, Any] = {
-        "method": "put",
-        "url": f"/device/{hostname}/interfaces",
+        "method": "post",
+        "url": f"/firmware/{filename}/set-default",
     }
 
-    _kwargs["json"] = body.to_dict()
-
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
@@ -49,19 +40,14 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 
 def sync_detailed(
-    hostname: str,
+    filename: str,
     *,
     client: AuthenticatedClient | Client,
-    body: Interfaces,
 ) -> Response[Any]:
-    r"""Take a map of interfaces and associated values to update
-
-     Example:
-        {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}
+    """Set a firmware as the default image
 
     Args:
-        hostname (str):
-        body (Interfaces):
+        filename (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -72,8 +58,7 @@ def sync_detailed(
     """
 
     kwargs = _get_kwargs(
-        hostname=hostname,
-        body=body,
+        filename=filename,
     )
 
     response = client.get_httpx_client().request(
@@ -84,19 +69,14 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    hostname: str,
+    filename: str,
     *,
     client: AuthenticatedClient | Client,
-    body: Interfaces,
 ) -> Response[Any]:
-    r"""Take a map of interfaces and associated values to update
-
-     Example:
-        {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}
+    """Set a firmware as the default image
 
     Args:
-        hostname (str):
-        body (Interfaces):
+        filename (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -107,8 +87,7 @@ async def asyncio_detailed(
     """
 
     kwargs = _get_kwargs(
-        hostname=hostname,
-        body=body,
+        filename=filename,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)

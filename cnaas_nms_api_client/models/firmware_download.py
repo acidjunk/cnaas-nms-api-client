@@ -1,10 +1,14 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.firmware_checksum import FirmwareChecksum
+
 
 T = TypeVar("T", bound="FirmwareDownload")
 
@@ -14,13 +18,13 @@ class FirmwareDownload:
     """
     Attributes:
         url (str):
-        sha1 (str):
+        checksum (FirmwareChecksum):
         filename (str):
         verify_tls (Union[Unset, bool]):
     """
 
     url: str
-    sha1: str
+    checksum: "FirmwareChecksum"
     filename: str
     verify_tls: Unset | bool = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -28,7 +32,7 @@ class FirmwareDownload:
     def to_dict(self) -> dict[str, Any]:
         url = self.url
 
-        sha1 = self.sha1
+        checksum = self.checksum.to_dict()
 
         filename = self.filename
 
@@ -39,7 +43,7 @@ class FirmwareDownload:
         field_dict.update(
             {
                 "url": url,
-                "sha1": sha1,
+                "checksum": checksum,
                 "filename": filename,
             }
         )
@@ -50,10 +54,12 @@ class FirmwareDownload:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.firmware_checksum import FirmwareChecksum
+
         d = dict(src_dict)
         url = d.pop("url")
 
-        sha1 = d.pop("sha1")
+        checksum = FirmwareChecksum.from_dict(d.pop("checksum"))
 
         filename = d.pop("filename")
 
@@ -61,7 +67,7 @@ class FirmwareDownload:
 
         firmware_download = cls(
             url=url,
-            sha1=sha1,
+            checksum=checksum,
             filename=filename,
             verify_tls=verify_tls,
         )

@@ -21,9 +21,10 @@ class FirmwareUpgrade:
         group (Union[Unset, str]):
         hostname (Union[Unset, str]):
         pre_flight (Union[Unset, bool]):
-        post_flight (Union[Unset, bool]):
-        post_wattime (Union[Unset, int]):
-        reboot (Union[Unset, bool]):
+        post_flight (Union[Unset, bool]):  Default: False.
+        post_waittime (Union[Unset, int]):  Default: 600.
+        reboot (Union[Unset, bool]):  Default: False.
+        staggered_upgrade (Union[Unset, bool]):  Default: False.
     """
 
     url: str
@@ -34,9 +35,10 @@ class FirmwareUpgrade:
     group: Unset | str = UNSET
     hostname: Unset | str = UNSET
     pre_flight: Unset | bool = UNSET
-    post_flight: Unset | bool = UNSET
-    post_wattime: Unset | int = UNSET
-    reboot: Unset | bool = UNSET
+    post_flight: Unset | bool = False
+    post_waittime: Unset | int = 600
+    reboot: Unset | bool = False
+    staggered_upgrade: Unset | bool = False
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -58,9 +60,11 @@ class FirmwareUpgrade:
 
         post_flight = self.post_flight
 
-        post_wattime = self.post_wattime
+        post_waittime = self.post_waittime
 
         reboot = self.reboot
+
+        staggered_upgrade = self.staggered_upgrade
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -85,10 +89,12 @@ class FirmwareUpgrade:
             field_dict["pre_flight"] = pre_flight
         if post_flight is not UNSET:
             field_dict["post_flight"] = post_flight
-        if post_wattime is not UNSET:
-            field_dict["post_wattime"] = post_wattime
+        if post_waittime is not UNSET:
+            field_dict["post_waittime"] = post_waittime
         if reboot is not UNSET:
             field_dict["reboot"] = reboot
+        if staggered_upgrade is not UNSET:
+            field_dict["staggered_upgrade"] = staggered_upgrade
 
         return field_dict
 
@@ -113,9 +119,11 @@ class FirmwareUpgrade:
 
         post_flight = d.pop("post_flight", UNSET)
 
-        post_wattime = d.pop("post_wattime", UNSET)
+        post_waittime = d.pop("post_waittime", UNSET)
 
         reboot = d.pop("reboot", UNSET)
+
+        staggered_upgrade = d.pop("staggered_upgrade", UNSET)
 
         firmware_upgrade = cls(
             url=url,
@@ -127,8 +135,9 @@ class FirmwareUpgrade:
             hostname=hostname,
             pre_flight=pre_flight,
             post_flight=post_flight,
-            post_wattime=post_wattime,
+            post_waittime=post_waittime,
             reboot=reboot,
+            staggered_upgrade=staggered_upgrade,
         )
 
         firmware_upgrade.additional_properties = d

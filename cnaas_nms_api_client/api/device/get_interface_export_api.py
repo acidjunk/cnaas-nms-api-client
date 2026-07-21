@@ -5,27 +5,33 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.interfaces import Interfaces
-from ...types import Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     hostname: str,
     *,
-    body: Interfaces,
+    include_uplinks: Unset | bool = UNSET,
+    include_downlinks: Unset | bool = UNSET,
+    include_descriptions: Unset | bool = UNSET,
 ) -> dict[str, Any]:
-    headers: dict[str, Any] = {}
+
+    params: dict[str, Any] = {}
+
+    params["include_uplinks"] = include_uplinks
+
+    params["include_downlinks"] = include_downlinks
+
+    params["include_descriptions"] = include_descriptions
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
-        "method": "put",
-        "url": f"/device/{hostname}/interfaces",
+        "method": "get",
+        "url": f"/device/{hostname}/interfaces_export",
+        "params": params,
     }
 
-    _kwargs["json"] = body.to_dict()
-
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
@@ -52,16 +58,17 @@ def sync_detailed(
     hostname: str,
     *,
     client: AuthenticatedClient | Client,
-    body: Interfaces,
+    include_uplinks: Unset | bool = UNSET,
+    include_downlinks: Unset | bool = UNSET,
+    include_descriptions: Unset | bool = UNSET,
 ) -> Response[Any]:
-    r"""Take a map of interfaces and associated values to update
-
-     Example:
-        {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}
+    """Export all interfaces for local download
 
     Args:
         hostname (str):
-        body (Interfaces):
+        include_uplinks (Union[Unset, bool]):
+        include_downlinks (Union[Unset, bool]):
+        include_descriptions (Union[Unset, bool]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -73,7 +80,9 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         hostname=hostname,
-        body=body,
+        include_uplinks=include_uplinks,
+        include_downlinks=include_downlinks,
+        include_descriptions=include_descriptions,
     )
 
     response = client.get_httpx_client().request(
@@ -87,16 +96,17 @@ async def asyncio_detailed(
     hostname: str,
     *,
     client: AuthenticatedClient | Client,
-    body: Interfaces,
+    include_uplinks: Unset | bool = UNSET,
+    include_downlinks: Unset | bool = UNSET,
+    include_descriptions: Unset | bool = UNSET,
 ) -> Response[Any]:
-    r"""Take a map of interfaces and associated values to update
-
-     Example:
-        {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}
+    """Export all interfaces for local download
 
     Args:
         hostname (str):
-        body (Interfaces):
+        include_uplinks (Union[Unset, bool]):
+        include_downlinks (Union[Unset, bool]):
+        include_descriptions (Union[Unset, bool]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -108,7 +118,9 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         hostname=hostname,
-        body=body,
+        include_uplinks=include_uplinks,
+        include_downlinks=include_downlinks,
+        include_descriptions=include_descriptions,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)

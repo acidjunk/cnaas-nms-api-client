@@ -4,43 +4,34 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="Repository")
+T = TypeVar("T", bound="InterfacedataUntaggedVlan")
 
 
 @_attrs_define
-class Repository:
-    """
-    Attributes:
-        action (str):  Example: REFRESH.
+class InterfacedataUntaggedVlan:
+    """VLAN ID or name
+
+    Example:
+        STUDENTS
+
     """
 
-    action: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        action = self.action
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "action": action,
-            }
-        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        action = d.pop("action")
+        interfacedata_untagged_vlan = cls()
 
-        repository = cls(
-            action=action,
-        )
-
-        repository.additional_properties = d
-        return repository
+        interfacedata_untagged_vlan.additional_properties = d
+        return interfacedata_untagged_vlan
 
     @property
     def additional_keys(self) -> list[str]:

@@ -4,27 +4,27 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="Repository")
+T = TypeVar("T", bound="FirmwareUpgradecheck")
 
 
 @_attrs_define
-class Repository:
+class FirmwareUpgradecheck:
     """
     Attributes:
-        action (str):  Example: REFRESH.
+        group (str):
     """
 
-    action: str
+    group: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        action = self.action
+        group = self.group
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "action": action,
+                "group": group,
             }
         )
 
@@ -33,14 +33,14 @@ class Repository:
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        action = d.pop("action")
+        group = d.pop("group")
 
-        repository = cls(
-            action=action,
+        firmware_upgradecheck = cls(
+            group=group,
         )
 
-        repository.additional_properties = d
-        return repository
+        firmware_upgradecheck.additional_properties = d
+        return firmware_upgradecheck
 
     @property
     def additional_keys(self) -> list[str]:

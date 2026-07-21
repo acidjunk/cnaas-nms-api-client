@@ -114,18 +114,6 @@
           }
         }
       ],
-      "get": {
-        "summary": "Get a device from ID",
-        "operationId": "get_device_by_id_api",
-        "tags": [
-          "device"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "put": {
         "summary": "Modify device from ID",
         "operationId": "put_device_by_id_api",
@@ -164,6 +152,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a device from ID",
+        "operationId": "get_device_by_id_api",
+        "tags": [
+          "device"
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -271,9 +271,9 @@
           }
         }
       ],
-      "get": {
-        "summary": "List all interfaces status",
-        "operationId": "get_interface_status_api",
+      "put": {
+        "summary": "Bounce selected interfaces by appling bounce-down/bounce-up template",
+        "operationId": "put_interface_status_api",
         "tags": [
           "device"
         ],
@@ -283,9 +283,9 @@
           }
         }
       },
-      "put": {
-        "summary": "Bounce selected interfaces by appling bounce-down/bounce-up template",
-        "operationId": "put_interface_status_api",
+      "get": {
+        "summary": "List all interfaces status",
+        "operationId": "get_interface_status_api",
         "tags": [
           "device"
         ],
@@ -307,6 +307,29 @@
           }
         }
       ],
+      "put": {
+        "summary": "Take a map of interfaces and associated values to update",
+        "description": "Example:\n    {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}",
+        "operationId": "put_interface_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/interfaces"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "get": {
         "summary": "List all interfaces",
         "operationId": "get_interface_api",
@@ -318,11 +341,94 @@
             "description": "Success"
           }
         }
-      },
-      "put": {
-        "summary": "Take a map of interfaces and associated values to update",
-        "description": "Example:\n    {\"interfaces\": {\"Ethernet1\": {\"configtype\": \"ACCESS_AUTO\"}}}",
-        "operationId": "put_interface_api",
+      }
+    },
+    "/device/{hostname}/interfaces_export": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Export all interfaces for local download",
+        "operationId": "get_interface_export_api",
+        "tags": [
+          "device"
+        ],
+        "parameters": [
+          {
+            "name": "include_uplinks",
+            "in": "query",
+            "default": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_downlinks",
+            "in": "query",
+            "default": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_descriptions",
+            "in": "query",
+            "default": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/lldp_neighbors": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get_device_lldp_neighbors_api",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device/{hostname}/lldp_neighbors_detail": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get_device_lldp_neighbors_detail_api",
         "tags": [
           "device"
         ],
@@ -344,6 +450,28 @@
           }
         }
       ],
+      "post": {
+        "summary": "Restore configuration to previous version",
+        "operationId": "post_device_previous_config_api",
+        "tags": [
+          "device"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_restore"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "get": {
         "operationId": "get_device_previous_config_api",
         "tags": [
@@ -372,28 +500,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "post": {
-        "summary": "Restore configuration to previous version",
-        "operationId": "post_device_previous_config_api",
-        "tags": [
-          "device"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/device_restore"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Success"
@@ -444,18 +550,6 @@
           }
         }
       ],
-      "get": {
-        "summary": "Get stackmembers for device",
-        "operationId": "get_device_stackmembers_api",
-        "tags": [
-          "device"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "put": {
         "operationId": "put_device_stackmembers_api",
         "tags": [
@@ -471,6 +565,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get stackmembers for device",
+        "operationId": "get_device_stackmembers_api",
+        "tags": [
+          "device"
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -595,6 +701,17 @@
       }
     },
     "/device_synchistory": {
+      "post": {
+        "operationId": "post_device_sync_history_api",
+        "tags": [
+          "device_synchistory"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "get": {
         "operationId": "get_device_sync_history_api",
         "tags": [
@@ -608,17 +725,6 @@
               "type": "string"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "post": {
-        "operationId": "post_device_sync_history_api",
-        "tags": [
-          "device_synchistory"
         ],
         "responses": {
           "200": {
@@ -640,6 +746,40 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/device_sync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/device_syncto/hostname/{hostname}": {
+      "parameters": [
+        {
+          "name": "hostname",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Start sync of device(s)",
+        "operationId": "post_device_sync_hostname_api",
+        "tags": [
+          "device_syncto"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/device_hostname_sync"
               }
             }
           }
@@ -714,18 +854,6 @@
       }
     },
     "/firmware": {
-      "get": {
-        "summary": "Get firmwares",
-        "operationId": "get_firmware_api",
-        "tags": [
-          "firmware"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "post": {
         "summary": "Download new firmware",
         "operationId": "post_firmware_api",
@@ -742,6 +870,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get firmwares",
+        "operationId": "get_firmware_api",
+        "tags": [
+          "firmware"
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -773,6 +913,30 @@
         }
       }
     },
+    "/firmware/upgradecheck": {
+      "post": {
+        "summary": "Perform upgrade check on device group",
+        "operationId": "post_firmware_upgradecheck_api",
+        "tags": [
+          "firmware"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/firmware_upgradecheck"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/firmware/{filename}": {
       "parameters": [
         {
@@ -784,6 +948,18 @@
           }
         }
       ],
+      "delete": {
+        "summary": "Remove firmware",
+        "operationId": "delete_firmware_image_api",
+        "tags": [
+          "firmware"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "get": {
         "summary": "Get information about a single firmware",
         "operationId": "get_firmware_image_api",
@@ -795,10 +971,22 @@
             "description": "Success"
           }
         }
-      },
-      "delete": {
-        "summary": "Remove firmware",
-        "operationId": "delete_firmware_image_api",
+      }
+    },
+    "/firmware/{filename}/set-default": {
+      "parameters": [
+        {
+          "name": "filename",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Set a firmware as the default image",
+        "operationId": "post_firmware_set_default_api",
         "tags": [
           "firmware"
         ],
@@ -882,6 +1070,17 @@
           }
         }
       ],
+      "put": {
+        "operationId": "put_job_by_id_api",
+        "tags": [
+          "job"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "get": {
         "summary": "Get job information by ID",
         "operationId": "get_job_by_id_api",
@@ -893,32 +1092,9 @@
             "description": "Success"
           }
         }
-      },
-      "put": {
-        "operationId": "put_job_by_id_api",
-        "tags": [
-          "job"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
       }
     },
     "/joblocks": {
-      "get": {
-        "summary": "Get job locks",
-        "operationId": "get_job_lock_api",
-        "tags": [
-          "joblocks"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "delete": {
         "summary": "Remove job locks",
         "operationId": "delete_job_lock_api",
@@ -935,6 +1111,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get job locks",
+        "operationId": "get_job_lock_api",
+        "tags": [
+          "joblocks"
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -967,18 +1155,6 @@
           }
         }
       ],
-      "get": {
-        "summary": "Get a single specified linknet",
-        "operationId": "get_linknet_by_id_api",
-        "tags": [
-          "linknet"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "put": {
         "summary": "Update data on existing linknet",
         "operationId": "put_linknet_by_id_api",
@@ -1012,33 +1188,21 @@
             "description": "Success"
           }
         }
+      },
+      "get": {
+        "summary": "Get a single specified linknet",
+        "operationId": "get_linknet_by_id_api",
+        "tags": [
+          "linknet"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/linknets": {
-      "get": {
-        "summary": "Get all linksnets",
-        "operationId": "get_linknets_api",
-        "tags": [
-          "linknets"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Remove linknet",
-        "operationId": "delete_linknets_api",
-        "tags": [
-          "linknets"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "post": {
         "summary": "Add a new linknet",
         "operationId": "post_linknets_api",
@@ -1060,6 +1224,30 @@
             "description": "Success"
           }
         }
+      },
+      "delete": {
+        "summary": "Remove linknet",
+        "operationId": "delete_linknets_api",
+        "tags": [
+          "linknets"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all linksnets",
+        "operationId": "get_linknets_api",
+        "tags": [
+          "linknets"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/mgmtdomain/{mgmtdomain_id}": {
@@ -1073,18 +1261,6 @@
           }
         }
       ],
-      "get": {
-        "summary": "Get management domain by ID",
-        "operationId": "get_mgmtdomain_by_id_api",
-        "tags": [
-          "mgmtdomain"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "put": {
         "summary": "Modify management domain",
         "operationId": "put_mgmtdomain_by_id_api",
@@ -1118,21 +1294,21 @@
             "description": "Success"
           }
         }
-      }
-    },
-    "/mgmtdomains": {
+      },
       "get": {
-        "summary": "Get all management domains",
-        "operationId": "get_mgmtdomains_api",
+        "summary": "Get management domain by ID",
+        "operationId": "get_mgmtdomain_by_id_api",
         "tags": [
-          "mgmtdomains"
+          "mgmtdomain"
         ],
         "responses": {
           "200": {
             "description": "Success"
           }
         }
-      },
+      }
+    },
+    "/mgmtdomains": {
       "post": {
         "summary": "Add management domain",
         "operationId": "post_mgmtdomains_api",
@@ -1154,21 +1330,21 @@
             "description": "Success"
           }
         }
-      }
-    },
-    "/plugins": {
+      },
       "get": {
-        "summary": "List all plugins",
-        "operationId": "get_plugins_api",
+        "summary": "Get all management domains",
+        "operationId": "get_mgmtdomains_api",
         "tags": [
-          "plugins"
+          "mgmtdomains"
         ],
         "responses": {
           "200": {
             "description": "Success"
           }
         }
-      },
+      }
+    },
+    "/plugins": {
       "put": {
         "summary": "Modify plugins",
         "operationId": "put_plugins_api",
@@ -1190,6 +1366,18 @@
             "description": "Success"
           }
         }
+      },
+      "get": {
+        "summary": "List all plugins",
+        "operationId": "get_plugins_api",
+        "tags": [
+          "plugins"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/repository/{repo}": {
@@ -1203,18 +1391,6 @@
           }
         }
       ],
-      "get": {
-        "summary": "Get repository information",
-        "operationId": "get_repository_api",
-        "tags": [
-          "repository"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
       "put": {
         "summary": "Modify repository",
         "operationId": "put_repository_api",
@@ -1231,6 +1407,18 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get repository information",
+        "operationId": "get_repository_api",
+        "tags": [
+          "repository"
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -1269,8 +1457,8 @@
       }
     },
     "/settings/model": {
-      "get": {
-        "operationId": "get_settings_model_api",
+      "post": {
+        "operationId": "post_settings_model_api",
         "tags": [
           "settings"
         ],
@@ -1280,8 +1468,8 @@
           }
         }
       },
-      "post": {
-        "operationId": "post_settings_model_api",
+      "get": {
+        "operationId": "get_settings_model_api",
         "tags": [
           "settings"
         ],
@@ -1478,6 +1666,11 @@
           },
           "device_type": {
             "type": "string"
+          },
+          "replace_hostname": {
+            "type": "boolean",
+            "description": "This device id should replace old device with specified hostname",
+            "default": false
           }
         },
         "type": "object"
@@ -1530,7 +1723,31 @@
             "type": "boolean"
           },
           "confirm_mode": {
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2
+          }
+        },
+        "type": "object"
+      },
+      "device_hostname_sync": {
+        "properties": {
+          "dry_run": {
+            "type": "boolean"
+          },
+          "force": {
+            "type": "boolean"
+          },
+          "auto_push": {
+            "type": "boolean"
+          },
+          "resync": {
+            "type": "boolean"
+          },
+          "confirm_mode": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2
           }
         },
         "type": "object"
@@ -1655,22 +1872,44 @@
       },
       "firmware_download": {
         "required": [
+          "checksum",
           "filename",
-          "sha1",
           "url"
         ],
         "properties": {
           "url": {
             "type": "string"
           },
-          "sha1": {
-            "type": "string"
+          "checksum": {
+            "description": "checksum object containing algorithm and checksum value, if sha1 field is sent instead of checksum object sha1 is assumed as algorithm.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/firmware_checksum"
+              }
+            ]
           },
           "verify_tls": {
             "type": "boolean"
           },
           "filename": {
             "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "firmware_checksum": {
+        "required": [
+          "algorithm",
+          "checksum"
+        ],
+        "properties": {
+          "algorithm": {
+            "type": "string",
+            "description": "checksum algorithm"
+          },
+          "checksum": {
+            "type": "string",
+            "description": "checksum value"
           }
         },
         "type": "object"
@@ -1705,13 +1944,126 @@
             "type": "boolean"
           },
           "post_flight": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
           },
-          "post_wattime": {
-            "type": "integer"
+          "post_waittime": {
+            "type": "integer",
+            "default": 600
           },
           "reboot": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
+          },
+          "staggered_upgrade": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "type": "object"
+      },
+      "firmware_upgradecheck": {
+        "required": [
+          "group"
+        ],
+        "properties": {
+          "group": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "interfaces": {
+        "required": [
+          "interfaces"
+        ],
+        "properties": {
+          "interfaces": {
+            "$ref": "#/components/schemas/interfacename"
+          }
+        },
+        "type": "object"
+      },
+      "interfacename": {
+        "required": [
+          "interfacename"
+        ],
+        "properties": {
+          "interfacename": {
+            "$ref": "#/components/schemas/interface"
+          }
+        },
+        "type": "object"
+      },
+      "interface": {
+        "required": [
+          "configtype"
+        ],
+        "properties": {
+          "configtype": {
+            "type": "string",
+            "description": "Type of interface, can be: ACCESS_AUTO, ACCESS_UNTAGGED, ACCESS_TAGGED, ACCESS_UPLINK, ACCESS_DOWNLINK, MLAG_PEER",
+            "example": "ACCESS_AUTO"
+          },
+          "data": {
+            "$ref": "#/components/schemas/interfacedata"
+          }
+        },
+        "type": "object"
+      },
+      "interfacedata": {
+        "properties": {
+          "untagged_vlan": {
+            "type": "object",
+            "description": "VLAN ID or name",
+            "example": "STUDENTS"
+          },
+          "tagged_vlan_list": {
+            "type": "array",
+            "description": "List of VLAN IDs or names",
+            "example": [
+              "STUDENTS",
+              "EMPLOYEES"
+            ],
+            "items": {
+              "type": "object"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Interface description",
+            "example": "Access point"
+          },
+          "enabled": {
+            "type": "boolean",
+            "example": true
+          },
+          "aggregate_id": {
+            "type": "integer",
+            "description": "LACP ID",
+            "example": -1
+          },
+          "bpdu_filter": {
+            "type": "boolean",
+            "example": true
+          },
+          "redundant_link": {
+            "type": "boolean",
+            "example": true
+          },
+          "tags": {
+            "type": "array",
+            "description": "List of tags",
+            "example": [
+              "tag1",
+              "tag2"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "cli_append_str": {
+            "type": "string"
           }
         },
         "type": "object"
@@ -1763,7 +2115,8 @@
         ],
         "properties": {
           "action": {
-            "type": "string"
+            "type": "string",
+            "example": "REFRESH"
           }
         },
         "type": "object"
@@ -1785,7 +2138,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "Authorization",
-        "description": "Type in 'Bearer <your JWT token here' to authenticate."
+        "description": "Type 'Bearer <your JWT token here>' to authenticate, or leave empty to use token from WebUI login."
       }
     },
     "responses": {

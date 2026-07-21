@@ -1,30 +1,34 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="Repository")
+if TYPE_CHECKING:
+    from ..models.interfacename import Interfacename
+
+
+T = TypeVar("T", bound="Interfaces")
 
 
 @_attrs_define
-class Repository:
+class Interfaces:
     """
     Attributes:
-        action (str):  Example: REFRESH.
+        interfaces (Interfacename):
     """
 
-    action: str
+    interfaces: "Interfacename"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        action = self.action
+        interfaces = self.interfaces.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "action": action,
+                "interfaces": interfaces,
             }
         )
 
@@ -32,15 +36,17 @@ class Repository:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
-        action = d.pop("action")
+        from ..models.interfacename import Interfacename
 
-        repository = cls(
-            action=action,
+        d = dict(src_dict)
+        interfaces = Interfacename.from_dict(d.pop("interfaces"))
+
+        interfaces = cls(
+            interfaces=interfaces,
         )
 
-        repository.additional_properties = d
-        return repository
+        interfaces.additional_properties = d
+        return interfaces
 
     @property
     def additional_keys(self) -> list[str]:
